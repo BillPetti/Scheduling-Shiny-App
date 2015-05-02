@@ -2,11 +2,11 @@ library(shiny)
 
 shinyServer(function(input, output) {
   
-  
-  
+  Pitchers <- reactive({read.csv("data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)})
+  Batters <- reactive({read.csv("data/Batters_Edge.csv", header=TRUE, check.names = FALSE)})
   
   output$table1 <- renderDataTable({
-    Pitchers <- read.csv("data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)
+    Pitchers <- Pitchers()
     if (input$Year != "All"){
       Pitchers <- Pitchers[Pitchers$Year == input$Year,]
     } 
@@ -14,7 +14,7 @@ shinyServer(function(input, output) {
   })
   
   output$table2 <- renderDataTable({
-    Batters <- read.csv("data/Batters_Edge.csv", header=TRUE, check.names = FALSE)
+    Batters <- Batters()
     if (input$Year != "All"){
       Batters <- Batters[Batters$Year == input$Year,]
     } 
