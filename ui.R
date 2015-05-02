@@ -1,5 +1,5 @@
 library(shiny)
-
+Pitchers <- read.csv("data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)
 shinyUI(fluidPage(
   titlePanel('Edge%: 2010-Present'),
   fluidRow(
