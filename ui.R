@@ -1,8 +1,5 @@
 library(shiny)
-
-#load data that the selectInput below refers to
 Pitchers <- read.csv("data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)
-
 shinyUI(fluidPage(
   titlePanel('Edge%: 2010-Present'),
   fluidRow(
@@ -10,6 +7,8 @@ shinyUI(fluidPage(
            p("Provides current and historical data on the percentage of pitches thrown to different parts of the strike zone by pitchers and to batters"),
            p("Created and maintained by Bill Petti",
              a("(@BillPetti)", href = "https://twitter.com/billpetti")),
+           p("Code for this app can be found on",
+             a("GitHub)", href = "https://github.com/BillPetti/Scheduling-Shiny-App"),
            p("Data last updated",Sys.time()))
   ), 
     sidebarLayout(
@@ -37,3 +36,4 @@ shinyUI(fluidPage(
               br(), br(), a("Most Recent Version", href = "http://www.hardballtimes.com/expanding-the-edges-of-the-strike-zone/") 
       )
     )))))
+)

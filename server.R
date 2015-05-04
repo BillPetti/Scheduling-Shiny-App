@@ -2,9 +2,6 @@ library(shiny)
 
 shinyServer(function(input, output) {
   
-  
-  
-  
   output$table1 <- renderDataTable({
     Pitchers <- read.csv("data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)
     if (input$Year != "All"){

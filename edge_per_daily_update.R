@@ -9,9 +9,9 @@ require(dplyr)
 
 #import existing data files
 
-Pitchers_old<-read.csv("file.csv", header=TRUE, check.names = FALSE)
+Pitchers_old<-read.csv("C:/Users/Petti/Box Sync/Default Sync Folder/Baseball Data/Baseball Data/Edge_Percent/edge_percent/edge_shiny/data/Pitchers_Edge.csv", header=TRUE, check.names = FALSE)
 
-Batters_old<-read.csv("file.csv", header=TRUE, check.names = FALSE)
+Batters_old<-read.csv("C:/Users/Petti/Box Sync/Default Sync Folder/Baseball Data/Baseball Data/Edge_Percent/edge_percent/edge_shiny/data/Batters_Edge.csv", header=TRUE, check.names = FALSE)
 
 #remove current year stats
 
@@ -21,7 +21,7 @@ Batters_old<-filter(Batters_old, Year<2015)
 
 #connect to database
 
-con<-dbConnect(RMySQL::MySQL(), dbname="...", username = "...", password = "...", host = "...", port = ...)
+con<-dbConnect(RMySQL::MySQL(), dbname="tht", username = "bill.petti", password = "rt81csB8", host = "db.fangraphs.com", port = 3306)
 
 #query pitchers
 
@@ -34,7 +34,7 @@ sum(if(px is not null and pz is not null, ((stand = 'R' and (((px > -1.03 and px
 	(stand = 'L' and (((px > -1.20 and px < -.9) or (px > .21 and px < .81)) and (pz > (.35 + pl_b.height/12 *.229) and pz < (2.0 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Total Edge%',
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Horizontal Edge%',
 
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
@@ -51,28 +51,31 @@ sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px 
 /
 sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Bottom Edge%',
 
+
 (sum(if(px is not null and pz is not null, ((stand = 'R' and (((px > -1.03 and px < -.43 ) or (px > .7 and px < 1.00 )) and (pz > (.92 + pl_b.Height/12 *.136) and pz < (2.60 +  pl_b.height/12 *.136))))
-	or
+  or
 	(stand = 'L' and (((px > -1.20 and px < -.9) or (px > .21 and px < .81)) and (pz > (.35 + pl_b.height/12 *.229) and pz < (2.0 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) 
 
--
++
 
-(sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
+sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
 	or 
 	(stand = 'L' and ((px >= -.9 and px <= .21) and (pz > (1.7 + pl_b.height/12 *.229) and pz < (2 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) +
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))
+
++
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (.92 + pl_b.Height/12 *.136) and pz < (1.22 + pl_b.Height/12 *.136))))
 	or
 	(stand = 'L' and ((px >= -.9 and px <= .21) and (pz > (.35 + pl_b.height/12 *.229) and pz < (.65 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)))) as 'Horizontal Edge%',
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))) as 'Total Edge%',
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz >= (1.22 + pl_b.Height/12 *.136) and pz <= (2.30 +  pl_b.height/12 *.136))))
 or
@@ -116,7 +119,7 @@ sum(if(px is not null and pz is not null, ((stand = 'R' and (((px > -1.03 and px
 	(stand = 'L' and (((px > -1.20 and px < -.9) or (px > .21 and px < .81)) and (pz > (.35 + pl_b.height/12 *.229) and pz < (2.0 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Total Edge%',
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Horizontal Edge%',
 
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
@@ -134,27 +137,29 @@ sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px 
 sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) as 'Bottom Edge%',
 
 (sum(if(px is not null and pz is not null, ((stand = 'R' and (((px > -1.03 and px < -.43 ) or (px > .7 and px < 1.00 )) and (pz > (.92 + pl_b.Height/12 *.136) and pz < (2.60 +  pl_b.height/12 *.136))))
-	or
-	(stand = 'L' and (((px > -1.20 and px < -.9) or (px > .21 and px < .81)) and (pz > (.35 + pl_b.height/12 *.229) and pz < (2.0 + pl_b.height/12 *.229))))
+  or
+  (stand = 'L' and (((px > -1.20 and px < -.9) or (px > .21 and px < .81)) and (pz > (.35 + pl_b.height/12 *.229) and pz < (2.0 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) 
 
--
++
 
-(sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
+sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (2.3 + pl_b.Height/12 *.136) and pz < (2.6 +  pl_b.height/12 *.136))))
 	or 
 	(stand = 'L' and ((px >= -.9 and px <= .21) and (pz > (1.7 + pl_b.height/12 *.229) and pz < (2 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)) +
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))
+
++
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz > (.92 + pl_b.Height/12 *.136) and pz < (1.22 + pl_b.Height/12 *.136))))
 	or
 	(stand = 'L' and ((px >= -.9 and px <= .21) and (pz > (.35 + pl_b.height/12 *.229) and pz < (.65 + pl_b.height/12 *.229))))
 	), 0))
 /
-sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0)))) as 'Horizontal Edge%',
+sum(if(px is not null and pz is not null, pitch_type <> 'XC', 0))) as 'Total Edge%',
 
 sum(if(px is not null and pz is not null, ((stand = 'R' and ((px >= -.43 and px <= .7) and (pz >= (1.22 + pl_b.Height/12 *.136) and pz <= (2.30 +  pl_b.height/12 *.136))))
 or
@@ -201,12 +206,12 @@ Batters<-arrange(Batters, desc(Year))
 
 #export the updated data sets to a folder - export as csv
 
-write.csv(Pitchers, file="file.csv", row.names=FALSE, col.names=TRUE, na="")
+write.csv(Pitchers, file="C:/Users/Petti/Box Sync/Default Sync Folder/Baseball Data/Baseball Data/Edge_Percent/edge_percent/edge_shiny/data/Pitchers_Edge.csv", row.names=FALSE, col.names=TRUE, na="")
 
-write.csv(Batters, file="file.csv", row.names=FALSE, col.names=TRUE, na="")
+write.csv(Batters, file="C:/Users/Petti/Box Sync/Default Sync Folder/Baseball Data/Baseball Data/Edge_Percent/edge_percent/edge_shiny/data/Batters_Edge.csv", row.names=FALSE, col.names=TRUE, na="")
 
 #update and redeploy shiny app
 
 library(shinyapps)
 
-shinyapps::deployApp('edge_shiny_app')
+shinyapps::deployApp('C:/Users/Petti/Box Sync/Default Sync Folder/Baseball Data/Baseball Data/Edge_Percent/edge_percent/edge_shiny')
