@@ -198,6 +198,12 @@ Pitchers<-rbind(Pitchers_old, Pitchers)
 
 Batters<-rbind(Batters_old, Batters)
 
+#add column for Edge/Heart ratio
+
+Pitchers$`Edge/Heart Ratio`<-round(Pitchers$`Total Edge%`/Pitchers$`Heart%`,1)
+
+Batters$`Edge/Heart Ratio`<-round(Batters$`Total Edge%`/Batters$`Heart%`,1)
+
 #sort updated data by year
 
 Pitchers<-arrange(Pitchers, desc(Year))
