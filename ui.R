@@ -9,7 +9,7 @@ shinyUI(fluidPage(
              a("(@BillPetti)", href = "https://twitter.com/billpetti")),
            p("Code for this app can be found on",
              a("GitHub)", href = "https://github.com/BillPetti/Scheduling-Shiny-App"),
-           p("Data last updated",Sys.time()))
+           p("Data last updated",Sys.time(),"GMT")
   ), 
     sidebarLayout(
     sidebarPanel(selectInput("Year", 
@@ -18,13 +18,16 @@ shinyUI(fluidPage(
                                       unique(as.character(Pitchers$Year)))),
                  numericInput("pitch_total", 
                              label = "Minimum # of Pitches:",
-                             value = 300)
+                             value = 300),
+                 width=2
   )
   ,
   mainPanel(
     tabsetPanel(
       tabPanel("Pitchers", dataTableOutput(outputId = 'table1')),
       tabPanel("Batters", dataTableOutput(outputId = 'table2')),
+	   tabPanel("Team Pitchers", dataTableOutput(outputId = 'table3')),
+	    tabPanel("Team Batters", dataTableOutput(outputId = 'table4')),
       tabPanel("About", 
                br(), h1("About Edge%"), 
                br(), p("A few years ago, Jeff Zimmerman and I created a metric to represent how often a pitcher threw to the edges of the strike zone compared to the heart of the strike zone. The result was Edge%. The metric has evolved to include separate metrics for different edges (upper, lower, etc.). In the image below, the brown shaded areas represent the horizontal edges of the strike zone, the blue the top, and the green the bottom edges. You will notice the horizontal edges differ by batter handedness, given how umpires actually call balls and strikes."), 
@@ -36,4 +39,5 @@ shinyUI(fluidPage(
               br(), br(), a("Most Recent Version", href = "http://www.hardballtimes.com/expanding-the-edges-of-the-strike-zone/") 
       )
     )))))
+)
 )
